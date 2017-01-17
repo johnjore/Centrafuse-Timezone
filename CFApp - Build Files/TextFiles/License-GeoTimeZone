@@ -1,0 +1,100 @@
+GeoTimeZone
+Copyright (c) 2014 Matt Johnson & Simon Bartlett
+https://github.com/mj1856/GeoTimeZone
+
+While we certainly hope this software is useful, none of the authors or
+contributors place any guarantees as to the accuracy of the data or the
+results returned by querying it using this library.
+
+Contains code from Geohash-net
+Copyright (c) 2011 Sharon Lourduraj
+https://github.com/sharonjl/geohash-net
+
+Geohash-net is a port of Geohash-js
+Copyright (c) 2008 David Troy
+https://github.com/davetroy/geohash-js
+
+GeoTimeZone, Geohash-net and Geohash-js are distributed under the MIT License:
+
+-----------------------------------------------------------------------------
+The MIT License (MIT)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-----------------------------------------------------------------------------
+
+Time zone boundary data is provided by Eric Muller, who has waived all copyright
+and related or neighboring rights to this data.  This work is in the public domain.
+
+http://efele.net/maps/tz/
+
+-----------------------------------------------------------------------------
+
+Marine Exclusive Economic Zone (EZ) boundary data is provided by the
+Flanders Marine Institute, and is intended for use solely with this project,
+as permitted for a "Value-Added Software Application".  The following disclaimer
+applies to the MarineRegions data:
+
+The data is provided "as is", and no warranty express, implied or otherwise is
+offered as to the data's accuracy. The developers do not imply any opinion
+concerning the legal status of any country, territory or area, or concerning the
+delimitation of its frontiers or boundaries. The data can be used for educational,
+scientific or research purposes but should not be used for legal,
+commercial/economical (exploration of natural resources) or navigational purposes.
+
+http://www.marineregions.org
+
+-----------------------------------------------------------------------------
+
+Includes time zone location data from the IANA time zone database.
+This data is in the public domain.  Many thanks to Arthur David Olson,
+Paul Eggert, and the countless contributors to the IANA/Olson time zone data.
+
+http://www.iana.org/time-zones
+
+-----------------------------------------------------------------------------
+
+Includes data from the Unicode Common Locale Data Repository (CLDR)
+
+http://cldr.unicode.org/
+
+Copyright (C) 1991-2014 Unicode, Inc. All rights reserved.
+Distributed under the Terms of Use in http://www.unicode.org/copyright.html.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of the Unicode data files and any associated documentation (the "Data Files")
+or Unicode software and any associated documentation (the "Software") to deal
+in the Data Files or Software without restriction, including without
+limitation the rights to use, copy, modify, merge, publish, distribute,
+and/or sell copies of the Data Files or Software, and to permit persons to
+whom the Data Files or Software are furnished to do so, provided that (a) the
+above copyright notice(s) and this permission notice appear with all copies
+of the Data Files or Software, (b) both the above copyright notice(s) and this
+permission notice appear in associated documentation, and (c) there is clear
+notice in each modified Data File or in the Software as well as in the
+documentation associated with the Data File(s) or Software that the data or
+software has been modified.
+
+THE DATA FILES AND SOFTWARE ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF
+THIRD PARTY RIGHTS. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR HOLDERS
+INCLUDED IN THIS NOTICE BE LIABLE FOR ANY CLAIM, OR ANY SPECIAL INDIRECT OR
+CONSEQUENTIAL DAMAGES, OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE
+OF THE DATA FILES OR SOFTWARE.

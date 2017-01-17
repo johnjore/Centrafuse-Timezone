@@ -1,0 +1,17 @@
+<CFAPP>
+  <APPDATA>
+    <APPID>0</APPID>
+    <APPNAME>TimeZone</APPNAME>
+    <APPLOCATION>[CFAPPDIR]\Plugins\TimeZone</APPLOCATION>
+    <APPTYPE>PLUGIN</APPTYPE>
+    <VERSION>1.0.0</VERSION>
+    <REQUIRESRESTART>False</REQUIRESRESTART>
+  </APPDATA>
+  <APPFILES>
+    <FILENAME register="false" overwrite="true" source="DLLs\TimeZone.dll" destination="[CFAPPDIR]\Plugins\TimeZone\TimeZone.dll" />
+    <FILENAME register="false" overwrite="true" source="DLLs\GeoTimeZone.dll" destination="[CFAPPDIR]\Plugins\TimeZone\GeoTimeZone.dll" />
+    <FILENAME register="false" overwrite="true" source="Languages\English.xml" destination="[CFAPPDIR]\Plugins\TimeZone\Languages\English.xml" />
+    <FILENAME register="false" overwrite="true" source="TextFiles\lgpl.txt" destination="[CFAPPDIR]\Plugins\TimeZone\TextFiles\lgpl.txt" />
+    <FILENAME register="false" overwrite="true" source="TextFiles\License-GeoTimeZone" destination="[CFAPPDIR]\Plugins\TimeZone\TextFiles\License-GeoTimeZone" />
+  </APPFILES>
+</CFAPP>
