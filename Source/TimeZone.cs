@@ -17,18 +17,13 @@ namespace TimeZone
     public class TimeZone : CFPlugin
     {
         #region Variables
-
         public const string PluginName = "TimeZone";
         private string settingsPath = CFTools.AppDataPath + "\\system\\settings.xml";
         private const string LogFile = PluginName + ".log";
-
-        // we write the log to the appropriate users local appdata directory in the Plugins subfolder...
         public static string LogFilePath = CFTools.AppDataPath + "\\Plugins\\" + PluginName + "\\" + LogFile;
+        public static int intRefresh = 300;           // Default recheck interval (seconds)
 
-        private int intRefresh = 300;            // Default refresh interval (seconds)
-
-        // threads
-        Thread threadTimeZone;                  // Used while waiting to check if change to screen dimming
+        Thread threadTimeZone;                  // Worker thread
         private bool boolTimeZone = true;       // While true, thread runs
 
         static private bool LogEvents = true;   // LogEvents
@@ -66,16 +61,14 @@ namespace TimeZone
                 CFTools.writeModuleLog("startup", LogFilePath);
 
                 //From http://wiki.centrafuse.com/wiki/Application-Description.ashx
-                this.CF_params.settingsDisplayDesc = this.pluginLang.ReadField("/APPLANG/SETUP/DESCRIPTION");
-
-
+                CF_params.settingsDisplayDesc = pluginLang.ReadField("/APPLANG/SETUP/DESCRIPTION");
+                
                 //Get settings
                 LoadSettings();
 
                 //Create and start the TimeZone thead
-                threadTimeZone = new Thread(this.subTimeZone);
+                threadTimeZone = new Thread(SubTimeZone);
                 threadTimeZone.Start();
-
             }
             catch (Exception errmsg) { CFTools.writeError(errmsg.ToString()); }
         }
@@ -94,7 +87,7 @@ namespace TimeZone
             try
             {
                 // Creates a new plugin setup instance
-                Setup setup = new Setup(this.MainForm, this.pluginConfig, this.pluginLang);
+                Setup setup = new Setup(MainForm, pluginConfig, pluginLang);
                 returnvalue = setup.ShowDialog();
                 if (returnvalue == DialogResult.OK)
                 {
@@ -124,8 +117,20 @@ namespace TimeZone
         private void LoadSettings()
         {
             // The display name is shown in the application to represent the plugin. This sets the display name from the configuration file
-            this.CF_params.displayName = this.pluginLang.ReadField("/APPLANG/TIMEZONE/DISPLAYNAME");
-            LogEvents = Boolean.Parse(this.pluginConfig.ReadField("/APPCONFIG/LOGEVENTS"));
+            CF_params.displayName = pluginLang.ReadField("/APPLANG/TIMEZONE/DISPLAYNAME");
+            LogEvents = Boolean.Parse(pluginConfig.ReadField("/APPCONFIG/LOGEVENTS"));
+
+            //Refresh interval
+            try
+            {
+                intRefresh = Int32.Parse(pluginConfig.ReadField("/APPCONFIG/REFRESHINTERVAL"));
+            }
+            catch
+            {
+                intRefresh = 300;
+                pluginConfig.WriteField("/APPCONFIG/REFRESHINTERVAL", intRefresh.ToString(), true);
+            }
+            WriteLog("Refresh interval: '" + intRefresh.ToString() + "'");
         }
 
         public static void WriteLog(string msg)
@@ -138,7 +143,7 @@ namespace TimeZone
             catch { }
         }
 
-        private void subTimeZone()
+        private void SubTimeZone()
         {
             WriteLog("Start of 'subTimeZone' thread");
 
@@ -147,35 +152,27 @@ namespace TimeZone
                 //Is refresh timer updated?
                 WriteLog("Loop timer: " + intRefresh.ToString());
 
-                //UpdateTimeZone.GPSUpdateTimeZone(50.961379, 1.855333); // Europe/Paris
+                //UpdateTimeZone.GPSUpdateTimeZone(50.961379, 1.855333);  // Europe/Paris
                 //UpdateTimeZone.GPSUpdateTimeZone(50.437200, -3.555900); // Europe/London
                 //UpdateTimeZone.GPSUpdateTimeZone(41.161054, -8.621660); // Europe/Porto
 
                 try
                 {
-                    //Is CF GPS available?
-                    if (CF_navIsVisible() == true)
+                    double latitude = 0.0;
+                    double longitude = 0.0;
+
+                    WriteLog("Raw CF Nav data: " + CF_navGetInfo(CFNavInfo.Latitude) + ", " + CF_navGetInfo(CFNavInfo.Longitude));
+                    double.TryParse(CF_navGetInfo(CFNavInfo.Latitude), out latitude);
+                    double.TryParse(CF_navGetInfo(CFNavInfo.Longitude), out longitude);
+
+                    if (latitude == 0.0 && longitude == 0.0)
                     {
-                        double latitude = 0.0;
-                        double longitude = 0.0;
-
-                        WriteLog("Raw CF Nav data: " + CF_navGetInfo(CFNavInfo.Latitude) + ", " + CF_navGetInfo(CFNavInfo.Longitude));
-                        latitude = Double.Parse(CF_navGetInfo(CFNavInfo.Latitude));
-                        longitude = Double.Parse(CF_navGetInfo(CFNavInfo.Longitude));
-
-                        if (latitude == 0.0 && longitude == 0.0)
-                        {
-                            WriteLog("Lat and long is 0 and invalid. Doing nothing");
-                        }
-                        else
-                        {
-                            WriteLog("We have GPS coordinates: lat:" + latitude.ToString() + ",Lon: " + longitude.ToString());
-                            UpdateTimeZone.GPSUpdateTimeZone(latitude, longitude);
-                        }
+                        WriteLog("Latitude and longitude is 0 or invalid. Doing nothing");
                     }
                     else
                     {
-                        WriteLog("No GPS coordinates. Is Navigation engine loaded and GPS initialized?");
+                        WriteLog("We have GPS coordinates: lat:" + latitude.ToString() + ", Lon: " + longitude.ToString());
+                        UpdateTimeZone.GPSUpdateTimeZone(latitude, longitude);
                     }
                 }
                 catch (Exception errmsg)

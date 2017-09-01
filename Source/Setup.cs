@@ -45,7 +45,11 @@ namespace TimeZone
                     ButtonText[i] = this.pluginLang.ReadField("APPLANG/SETUP/DISPLAYNAME");
                     ButtonValue[i++] = this.pluginLang.ReadField("APPLANG/TIMEZONE/DISPLAYNAME");
 
-                    ButtonHandler[i] = null; ButtonText[i] = ""; ButtonValue[i++] = "";
+                    ButtonHandler[i] = new CFSetupHandler(SetRefreshInterval);
+                    ButtonText[i] = this.pluginLang.ReadField("/APPLANG/SETUP/REFRESHINTERVAL");
+                    Int32.TryParse(pluginConfig.ReadField("/APPCONFIG/REFRESHINTERVAL"), out TimeZone.intRefresh);
+                    ButtonValue[i++] = TimeZone.intRefresh.ToString(); 
+
                     ButtonHandler[i] = null; ButtonText[i] = ""; ButtonValue[i++] = "";
                     ButtonHandler[i] = null; ButtonText[i] = ""; ButtonValue[i++] = "";
 
@@ -93,7 +97,27 @@ namespace TimeZone
             this.pluginConfig.WriteField("/APPCONFIG/LOGEVENTS", value.ToString());
         }
 
-#endregion
+        private void SetRefreshInterval(ref object value)
+        {
+            try
+            {
+                string resultvalue, resulttext;
+
+                if (this.CF_systemDisplayDialog(CF_Dialogs.NumberPad, this.pluginLang.ReadField("/APPLANG/SETUP/REFRESHINTERVAL"), out resultvalue, out resulttext) == DialogResult.OK)
+                {
+                    int intPort = int.Parse(resultvalue);
+                    this.pluginConfig.WriteField("/APPCONFIG/REFRESHINTERVAL", intPort.ToString());
+                    ButtonValue[(int)value] = intPort.ToString();
+                }
+            }
+            catch (Exception errmsg)
+            {
+                CFTools.writeError(TimeZone.PluginName + ": Failed to handle SetRefreshInterval(), " + errmsg.ToString());
+            }
+        }
+
+
+        #endregion
 
     }
 }
